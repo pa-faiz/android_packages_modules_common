@@ -31,7 +31,7 @@ mainline_stubs_args =
     "--hide Typo " +
     "--hide UnavailableSymbol "
 
-// TODO: modularize this so not every module has the same whitelist
+// TODO: modularize this so not every module has the same list
 framework_packages_to_document = [
     "android",
     "dalvik",
@@ -148,6 +148,8 @@ java_defaults {
         ":__subpackages__",
         "//frameworks/base/apex:__subpackages__",
         "//frameworks/base/libs/hwui",
+        // TODO: remove after moving connectivity to packages/modules
+        "//frameworks/base/packages/Connectivity:__subpackages__",
         "//frameworks/base/wifi",
         "//packages/modules:__subpackages__",
         "//packages/providers/MediaProvider:__subpackages__",
