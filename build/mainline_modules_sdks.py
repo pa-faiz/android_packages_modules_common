@@ -422,6 +422,11 @@ class SnapshotBuilder:
                             scope_pattern=r"(public|system|module-lib)",
                             name_pattern=fr"({module_name}(-removed|-stubs)?)"))
 
+                    available_apexes = [f'"{aosp_apex}"']
+                    if aosp_apex != "com.android.tethering":
+                        available_apexes.append(f'"test_{aosp_apex}"')
+                    apex_available = ",\n        ".join(available_apexes)
+
                     bp.write(f"""
 java_sdk_library_import {{
     name: "{module_name}",
@@ -429,8 +434,7 @@ java_sdk_library_import {{
     prefer: true,
     shared_library: {shared_library},
     apex_available: [
-        "{aosp_apex}",
-        "test_{aosp_apex}",
+        {apex_available},
     ],
     public: {{
         jars: ["public/{module_name}-stubs.jar"],
@@ -728,7 +732,7 @@ R = BuildRelease(
 )
 S = BuildRelease(
     name="S",
-    # Generate a snapshot for S using Soong.
+    # Generate a snapshot for this build release using Soong.
     creator=create_sdk_snapshots_in_soong,
     # This requires the SoongConfigBoilerplateInserter transformation to be
     # applied.
@@ -736,9 +740,16 @@ S = BuildRelease(
 )
 Tiramisu = BuildRelease(
     name="Tiramisu",
-    # Generate a snapshot for Tiramisu using Soong.
+    # Generate a snapshot for this build release using Soong.
     creator=create_sdk_snapshots_in_soong,
-    # This supports the use_source_config_var property.
+    # This build release supports the use_source_config_var property.
+    preferHandling=PreferHandling.USE_SOURCE_CONFIG_VAR_PROPERTY,
+)
+UpsideDownCake = BuildRelease(
+    name="UpsideDownCake",
+    # Generate a snapshot for this build release using Soong.
+    creator=create_sdk_snapshots_in_soong,
+    # This build release supports the use_source_config_var property.
     preferHandling=PreferHandling.USE_SOURCE_CONFIG_VAR_PROPERTY,
 )
 
