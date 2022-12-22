@@ -18,15 +18,23 @@ package {
     default_applicable_licenses: ["Android-Apache-2.0"],
 }
 
-java_library_host {
-    name: "ApexInstallHelper",
-    visibility: ["//visibility:public"],
+java_test_host {
+    name: "ClasspathFetcherTest",
+    test_options: {
+        unit_test: true,
+    },
     srcs: [
-        "ApexInstallHelper.java"
+        "ClasspathFetcherTest.java"
     ],
-    libs: ["tradefed"],
     static_libs: [
-        "cts-install-lib-host",
-        "frameworks-base-hostutils",
+        "ClasspathFetcher",
+        "mockito-host",
+        "objenesis",
+        "truth-prebuilt",
+        "junit",
+        "tradefed",
+    ],
+    test_suites: [
+        "general-tests",
     ],
 }
