@@ -160,6 +160,8 @@ java_defaults {
 
     defaults_visibility: [
         ":__subpackages__",
+        // TODO(b/237461653): Move this to packages/modules/Nfc
+        "//frameworks/base/core/java",
         "//frameworks/base/apex:__subpackages__",
         "//frameworks/base/libs/hwui",
         "//frameworks/base/wifi",
@@ -356,7 +358,7 @@ apex_defaults {
 library_linking_strategy_cc_defaults {
     name: "apex-lowest-min-sdk-version",
     defaults_visibility: [
-         "//system/core/libutils",
+         "//system/core/libutils:__subpackages__",
     ],
     min_sdk_version: APEX_LOWEST_MIN_SDK_VERSION,
     soong_config_variables: {
